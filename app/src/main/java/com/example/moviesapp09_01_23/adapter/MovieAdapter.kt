@@ -13,7 +13,7 @@ class MovieAdapter(var lista: MutableList<MovieData>): RecyclerView.Adapter<Movi
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-
+        holder.render(lista[position])
     }
 
     override fun getItemCount(): Int {
