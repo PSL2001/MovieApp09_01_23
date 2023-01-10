@@ -1,5 +1,6 @@
 package com.example.moviesapp09_01_23
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
@@ -26,15 +27,21 @@ class MainActivity : AppCompatActivity() {
     private fun setRecycler() {
         val layoutManager = GridLayoutManager(this, 2)
         binding.recPelis.layoutManager = layoutManager
-        adapter = MovieAdapter(lista)
+        adapter = MovieAdapter(lista) { movie -> onItemClick(movie) }
         binding.recPelis.adapter = adapter
         traerPeliculas()
+    }
+
+    private fun onItemClick(movie: MovieData) {
+        val i = Intent(this, DetallesActivity::class.java).apply {
+            putExtra("MOVIE", movie)
+        }
+        startActivity(i)
     }
 
     private fun traerPeliculas() {
         lifecycleScope.launch {
             val datos = ApiClient.apiClient.getPopularMovies(key)
-
             adapter.lista = datos.results.toMutableList()
             adapter.notifyDataSetChanged()
         }

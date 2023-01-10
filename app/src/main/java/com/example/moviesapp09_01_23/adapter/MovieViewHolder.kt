@@ -9,10 +9,11 @@ import com.squareup.picasso.Picasso
 class MovieViewHolder(v: View): RecyclerView.ViewHolder(v) {
     private val binding = LayoutMovieBinding.bind(v)
 
-    fun render(movie: MovieData) {
+    fun render(movie: MovieData, onItemClick: (MovieData) -> Unit) {
         binding.tvTitulo.text = movie.titulo
         //Picasso.get().load(url).into(campoBinding)
         Picasso.get().load("https://image.tmdb.org/t/p/w300${movie.caratula}").into(binding.ivPeli1)
+        itemView.setOnClickListener { onItemClick(movie) }
     }
 
 }
